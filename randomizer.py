@@ -17,22 +17,22 @@ from collections import deque
 
 # Import the list of words
 # Words should be in a CSV file format in the Data folder. Change the name below to whatever you called it!
-df = pd.read_csv(r'Word Randomizer/Data/Words.csv')
+df = pd.read_csv('Data/Words.csv')
 
 # Load the queue of randomized words and if not present, create one.
 try:
-    queue = pickle.load(open("Word Randomizer/Data/rand_queue.pickle", "rb"))
+    queue = pickle.load(open("Data/rand_queue.pickle", "rb"))
 except (OSError, IOError) as e:
     word_count = len(df.index)
     queue = deque([i for i in range(0, word_count)])
-    pickle.dump(queue, open("Word Randomizer/Data/rand_queue.pickle", "wb"))
+    pickle.dump(queue, open("Data/rand_queue.pickle", "wb"))
 
 # Load the queue of reviewed words and if not present, create it.
 try:
-    used = pickle.load(open("Word Randomizer/Data/used_queue.pickle", "rb"))
+    used = pickle.load(open("Data/used_queue.pickle", "rb"))
 except (OSError, IOError) as e:
     used = deque([])
-    pickle.dump(used, open("Word Randomizer/Data/used_queue.pickle", "wb"))
+    pickle.dump(used, open("Data/used_queue.pickle", "wb"))
 
 # Initialize empty list to keep track of each round of review
 indices = []
@@ -60,5 +60,5 @@ number = int(input("How many words would you like to review today?"))
 random.shuffle(queue)
 popper(number)
 print('You have: ' + str(len(queue)) + ' words remaining in the queue!')
-pickle.dump(used, open("Word Randomizer/Data/used_queue.pickle", "wb"))
-pickle.dump(queue, open("Word Randomizer/Data/rand_queue.pickle", "wb"))
+pickle.dump(used, open("Data/used_queue.pickle", "wb"))
+pickle.dump(queue, open("Data/rand_queue.pickle", "wb"))
